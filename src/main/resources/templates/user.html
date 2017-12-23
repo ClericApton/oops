@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${'OOPS - ' + user + '''s page'}">User's page</title>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <h1><span th:text="${user}">user</span>'s page</h1>
+        <div th:if="${message}">
+            <hr />
+            <h3>Latest message from the administrator</h3>
+            <p><span th:text="${'[' + message.timestamp} + ']'">timestamp</span> <span th:utext="${message.content}">content</span></p>
+        </div>
+        <div th:if="${param.search}">
+            <hr />
+            <h3>Matches for "<span th:text="${search}">search</span>":</h3>
+            <table border="1">
+                <tr>
+                    <td><b>Service</b></td>
+                    <td><b>Username</b></td>
+                    <td><b>Password</b></td>
+                </tr>
+                <th:block th:each="entry: ${entries}">
+                    <tr>
+                        <td th:text="${entry.service}">service</td>
+                        <td th:text="${entry.username}">username</td>
+                        <td th:text="${entry.password}">password</td>
+                    </tr>
+                </th:block>
+            </table>
+        </div>
+        <hr />
+        <h3>Search by service name</h3>
+        <form th:action="@{/user}" method="GET">
+            <p><label>Service</label>: <input type="text" name="search" /></p>
+            <p><input type="submit" value="Submit" /></p>
+        </form>
+        <hr />
+        <h3>Add a new entry</h3>       
+        <form th:action="@{/user}" method="POST">
+            <p><label>Service</label>: <input type="text" name="service" /></p>
+            <p><label>Username</label>: <input type="text" name="username" /></p>
+            <p><label>Password</label>: <input type="text" name="password" /></p>
+            <p><input type="submit" value="Submit" /></p>
+        </form>
+        <hr />
+        <h3>Caution! Pressing the following button deletes all your entries.</h3>
+        <form th:action="@{/delete}" method="GET">
+            <p><input type="submit" value="Delete all!" /></p>
+        </form>
+        <hr />
+        <form th:action="@{/logout}" method="POST">
+            <p><input type="submit" value="Log out" /></p>
+        </form>
+    </body>
+</html>
