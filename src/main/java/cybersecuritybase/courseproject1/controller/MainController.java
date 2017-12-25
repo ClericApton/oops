@@ -74,7 +74,7 @@ public class MainController {
         return "redirect:/user";
     }
     
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteEntries(Authentication authentication) {
         this.entryDao.deleteAll(authentication.getName());
         return "redirect:/user";

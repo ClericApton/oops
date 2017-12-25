@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,14 +42,15 @@ public class EntryDao {
     }
     
     public List<Entry> findBySearchString(String givenUser, String search) {
-        String query = "SELECT * FROM entry WHERE user = '" + givenUser + "' AND service LIKE '%" + search + "%' ORDER BY service";
-        // SQL injection: ' OR 1=1 OR '
+        String query = "SELECT * FROM entry WHERE user = ? AND service LIKE ? ORDER BY service";
         List<Entry> entries = new ArrayList<>();
         ResultSet rs = null;
         
         try (Connection conn = this.connect()) {
-            Statement stmt = conn.createStatement();
-            rs = stmt.executeQuery(query);
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, givenUser);
+            pstmt.setString(2, "%" + search + "%");
+            rs = pstmt.executeQuery();
             while(rs.next()) {
                 Integer id = rs.getInt("id");
                 String user = rs.getString("user");
@@ -61,7 +61,7 @@ public class EntryDao {
                 entries.add(entry);
             }
             rs.close();
-            stmt.close();
+            pstmt.close();
         } catch (SQLException e) {
             System.out.println("Exception: " + e.getMessage());
         }

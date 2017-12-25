@@ -9,7 +9,7 @@
         <div th:if="${message}">
             <hr />
             <h3>Latest message from the administrator</h3>
-            <p><span th:text="${'[' + message.timestamp} + ']'">timestamp</span> <span th:utext="${message.content}">content</span></p>
+            <p><span th:text="${'[' + message.timestamp} + ']'">timestamp</span> <span th:text="${message.content}">content</span></p>
         </div>
         <div th:if="${param.search}">
             <hr />
@@ -45,7 +45,7 @@
         </form>
         <hr />
         <h3>Caution! Pressing the following button deletes all your entries.</h3>
-        <form th:action="@{/delete}" method="GET">
+        <form th:action="@{/delete}" method="POST">
             <p><input type="submit" value="Delete all!" /></p>
         </form>
         <hr />
