@@ -9,7 +9,8 @@ The application has three regular users and an administrator whose username/pass
 #### Installing and running the application
 1. Clone the GitHub repository using the command prompt: `git clone https://github.com/ClericApton/oops.git`
 2. Change current directory to the project's root directory: `cd oops`
-3. Run the application: `mvn spring-boot:run`
+3. Switch branch to fixed: `git checkout fixed`
+4. Run the application: `mvn spring-boot:run`
 
 Please note that to reach the fixed application's log in page you must open https://localhost:8443/login.
 
