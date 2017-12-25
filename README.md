@@ -17,7 +17,7 @@ The application has various security vulnerabilities. They are described and dis
 1. SQL injection revealing sensitive data (Category A1 Injection)
 	1. Open http://localhost:8080/login in a web browser.
 	2. Enter Mallory/mallory as Username/Password and press the Log in button.
-	3. Enter the following in the Service field: `' OR 1=1 OR '` (starting and ending with ') and submit.
+	3. Enter the following in the first Service field: `' OR 1=1 OR '` (starting and ending with ') and submit.
 	4. All the service/username/password entries in the database are revealed.
 
 	In EntryDao.java the query for selecting entries is formed by simply concatenating character strings which permits SQL injection. In this case the query will become `SELECT * FROM entry WHERE user = 'Mallory' AND service LIKE '%' OR 1=1 OR '%' ORDER BY service;`. The condition `1=1` is always true so the query will return all the rows in the table. This issue can be fixed by using parameterized queries instead of concatenation.
